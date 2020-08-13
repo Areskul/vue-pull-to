@@ -7,12 +7,10 @@
   </div>
 </template>
 <script>
-// import dynamics from "dynamics.js";
-import store from "../../store";
-const pullDownCls = "pullDown",
-  pullDownLabelCls = "pullDownLabel",
-  pullUpCls = "pullUp",
-  pullUpLabelCls = "pullUpLabel";
+const pullDownCls = "pullDown";
+const pullDownLabelCls = "pullDownLabel";
+const pullUpCls = "pullUp";
+const pullUpLabelCls = "pullUpLabel";
 const lableUp = {
   initial: "initial",
   suspend: "suspend",
@@ -27,15 +25,7 @@ const lableDown = {
 };
 export default {
   name: "PullToRefresh",
-  props: [
-    "down",
-    "up",
-    "pullupOffset",
-    "pulldownOffset",
-    "addNew",
-    "addMore",
-    "hasMore",
-  ],
+  props: ["down", "up", "pullupOffset", "pulldownOffset", "addNew", "addMore", "hasMore"],
   data: () => ({
     msg: "PullToRefresh",
     pullDownState: lableDown.initial,
@@ -45,24 +35,15 @@ export default {
     pullUpCls,
     pullUpLabelCls,
   }),
-  computed: {
-    styleFav: {
-      get: () => store.state.nav.styleFav,
-      set: (val) => store.dispatch("updateStyle", val),
-    },
-    cityFav: {
-      get: () => store.state.nav.cityFav,
-      set: (val) => store.dispatch("updateCity", val),
-    },
-  },
+  computed: {},
   methods: {
     scrollEvent(e) {
       this.$emit("scroll", e);
     },
     touchStart(ev) {
-      let self = this;
-      let touch = ev.touches[0];
-      let scrollObj = self.scrollObj;
+      const self = this;
+      const touch = ev.touches[0];
+      const { scrollObj } = self;
       self.pullFlag = 0;
       if (self.down) {
         this.pullDownEl.style.webkitTransitionDuration = "0s";
@@ -77,21 +58,17 @@ export default {
       self.maxY = scrollObj.scrollHeight - scrollObj.clientHeight;
     },
     touchMove(ev) {
-      let self = this,
-        len = this.pulldownOffset || 80,
-        offsetDefault = this.pullupOffset || 20;
-      let offsetY, touch;
+      const self = this;
+      const len = this.pulldownOffset || 80;
+      const offsetDefault = this.pullupOffset || 20;
+      let offsetY;
+      let touch;
       touch = ev.touches[0];
       offsetY = (touch.screenY - self.startY) / 2;
       // console.log("pull", self.down, offsetY, len);
 
-      //PullDown
-      if (
-        self.down &&
-        self.startPageY == 0 &&
-        offsetY > 0 &&
-        document.body.scrollTop == 0
-      ) {
+      // PullDown
+      if (self.down && self.startPageY == 0 && offsetY > 0 && document.body.scrollTop == 0) {
         window.onscroll = function () {
           ev.preventDefault();
         };
@@ -100,9 +77,9 @@ export default {
           self.pullDownState = lableDown.suspend;
           self.pullFlag = 1;
         }
-        self.pullDownEl.style.height = offsetY + "px";
+        self.pullDownEl.style.height = `${offsetY}px`;
       }
-      //PullUp
+      // PullUp
       else if (
         self.up &&
         self.startPageY >= self.maxY - offsetDefault &&
@@ -117,11 +94,11 @@ export default {
           self.pullUpState = lableUp.suspend;
           self.pullFlag = 2;
         }
-        self.pullUpEl.style.height = offsetY + "px";
+        self.pullUpEl.style.height = `${offsetY}px`;
       }
     },
     touchEnd() {
-      let self = this;
+      const self = this;
       if (self.down && self.pullFlag == 1) {
         console.log("loadData");
         self.pullDownState = lableDown.loading;
