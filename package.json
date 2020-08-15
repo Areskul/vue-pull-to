@@ -1,5 +1,5 @@
 {
-  "name": "vue-pull-to-pull",
+  "name": "@areskul/vue-pull-to-pull",
   "version": "1.0.0",
   "private": false,
   "main": "src/components/pull-to.vue",
