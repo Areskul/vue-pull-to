@@ -2,6 +2,7 @@
   "name": "vue-pull-to-pull",
   "version": "1.0.0",
   "private": false,
+  "main": "src/components/pull-to.vue",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
