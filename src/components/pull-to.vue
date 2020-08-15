@@ -1,8 +1,8 @@
 <!-- template for the component -->
 <template>
-  <div color="fg" ref="wrap" @scroll="scrollEvent">
+  <div :color="color" ref="wrap" @scroll="scrollEvent">
     <div ref="pullDownEl"></div>
-    <slot></slot>
+    <slot/>
     <div ref="pullUpEl"></div>
   </div>
 </template>
@@ -24,10 +24,9 @@ const lableDown = {
   complete: "complete",
 };
 export default {
-  name: "PullToRefresh",
-  props: ["down", "up", "pullupOffset", "pulldownOffset", "addNew", "addMore", "hasMore"],
+  name: "v-pull-to",
+  props: ["down", "up", "pullupOffset", "pulldownOffset", "addNew", "addMore", "hasMore", "color"],
   data: () => ({
-    msg: "PullToRefresh",
     pullDownState: lableDown.initial,
     pullUpState: lableUp.initial,
     pullDownCls,
